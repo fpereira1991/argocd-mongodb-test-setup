@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd-mongodb-test-setup
+  namespace: argocd-mongodb-test-setup
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/fpereira1991/argocd-mongodb-test-setup.git
+    targetRevision: HEAD
+    path: dev
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd-mongodb
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+
+  automated:
+    selfHeal: true
+    prune: true
